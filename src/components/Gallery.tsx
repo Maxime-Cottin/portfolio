@@ -6,16 +6,22 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 
 export const Gallery = () => {
-	const [isMobile, setIsMobile] = useState(true);
+	const [isMobile, setIsMobile] = useState(
+		typeof window !== "undefined" ? window.innerWidth < 768 : false
+	);
 
 	const updateMedia = () => {
-		setIsMobile(window.innerWidth < 768);
+		if (window.innerWidth < 768) {
+			setIsMobile(true);
+		} else {
+			setIsMobile(false);
+		}
 	};
 
 	useEffect(() => {
 		window.addEventListener("resize", updateMedia);
 		return () => window.removeEventListener("resize", updateMedia);
-	});
+	}, []);
 
 	return (
 		<>
